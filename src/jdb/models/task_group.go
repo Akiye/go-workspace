@@ -2,9 +2,9 @@ package models
 
 import (
 	"database/sql"
-	"encoding/json"
-	"entities"
-	"net/http"
+	//"encoding/json"
+	"jdb/entities"
+	//"net/http"
 )
 
 type TaskGroup struct {
@@ -13,9 +13,35 @@ type TaskGroup struct {
 
 func (taskGroup TaskGroup) FindAll() (shoot []entities.Shoot, err error) {
 	rows, err := taskGroup.Db.Query("SELECT * FROM task_group.shoot")
+
+	if err != nil {
+		return nil, err
+	} else {
+
+		var task_group []entities.Shoot
+		for rows.Next() {
+			var taskNumber string
+			var taskTitle string
+			var trainingFrequency string
+
+			err2 := rows.Scan(&taskNumber, &taskTitle, &trainingFrequency)
+			if err2 != nil {
+				return nil, err2
+			} else {
+				shoot := entities.Shoot{
+					TaskNumber:        taskNumber,
+					TaskTitle:         taskTitle,
+					TrainingFrequency: trainingFrequency,
+				}
+				task_group = append(task_group, shoot)
+			}
+		}
+		return task_group, nil
+
+	}
 }
 
-func respondWithError(w http.ResponseWriter, code int, message string) {
+/*func respondWithError(w http.ResponseWriter, code int, message string) {
 	responseWithJson(w, code, map[string]string{"error": message})
 
 }
@@ -25,4 +51,4 @@ func responseWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	w.Write(response)
-}
+}*/
