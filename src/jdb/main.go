@@ -4,8 +4,6 @@ import (
 	//"database/sql"
 	"fmt"
 	"net/http"
-
-	"github.com/Akiye"
 )
 
 /*type User struct {

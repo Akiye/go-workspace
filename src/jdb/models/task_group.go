@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"go-workspace/src/jdb/entities"
 	"jdb/entities"
 )
 
