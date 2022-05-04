@@ -8,7 +8,9 @@ import (
 )
 
 /*type User struct {
-	Name string `json:"name"`
+	TaskNumber string `json:taskNumber`
+	TaskTitle string `json:taskTitle`
+	TrainingFrequency string `json:trainingFrequency;`
 }
 */
 func main() {
@@ -22,7 +24,7 @@ func main() {
 	}
 
 	defer db.Close()
-	//insert, err := db.Exec("INSERT INTO task_group VALUES(?, ?)")
+	//insert, err := db.Exec("INSERT INTO `survive` VALUES ('159-COM-TEST','Identify Combatant and Non-Combatant Personnel & Hybrid Threats','AN');")
 	/*if err != nil {
 		panic(err.Error())
 	}
