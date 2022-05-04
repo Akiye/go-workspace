@@ -9,6 +9,7 @@ import (
 
 func FindAll(response http.ResponseWriter, request *http.Request) {
 	db, err := config.GetDB()
+	
 	if err != nil {
 		respondWithError(response, http.StatusBadRequest, err.Error())
 	}

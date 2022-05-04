@@ -2,9 +2,7 @@ package models
 
 import (
 	"database/sql"
-	//"encoding/json"
 	"jdb/entities"
-	//"net/http"
 )
 
 type TaskGroup struct {
