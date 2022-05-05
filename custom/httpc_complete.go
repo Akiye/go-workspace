@@ -18,7 +18,7 @@ type Job struct {
 	Count  int    `json:"count"`
 }
 
-func httpGet() {
+func main() {
 	// GET request
 	resp, err := http.Get("https://httpbin.org/get")
 	if err != nil {

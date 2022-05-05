@@ -3,10 +3,7 @@ package main
 import (
 	//"database/sql"
 	"fmt"
-	"go-workspace/src/jdb/apis"
 	"net/http"
-
-	"github.com/Akiye"
 )
 
 /*type User struct {
@@ -16,7 +13,7 @@ import (
 }
 */
 func main() {
-	router := Akiye.NewRouter()
+	router := akiye.NewRouter()
 
 	router.HandleFunc("/api/taskGroup/findall", taskGroup_api.FindAll).Methods("GET")
 
