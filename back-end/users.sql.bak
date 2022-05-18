@@ -1,0 +1,35 @@
+CREATE TABLE `users` (
+  `id` int,
+  `first_name` varchar (50) NOT NULL,
+   `last_name` varchar (50) NOT NULL,
+  `middle_name` varchar (50) NOT NULL,
+  `email` varchar (50) NOT NULL,
+  `title` varchar (50) NOT NULL,
+  `display_name` varchar (50) NOT NULL,
+  `height` varchar (50) NOT NULL,
+  `weight` int,
+  `body_fat` int,
+  `target_weight` int,
+  `test_date` date,
+  `next_test_date` date
+);
+
+INSERT INTO users VALUES ('{
+      "id": 1,
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "middle_name": "Teresa",
+      "email": "rudi.shafakian@lmi.org",
+      "title": "Soldier",
+      "display_name": "Specialist Smith",
+      "height": "60",
+      "weight": "117",
+      "body_fat": "20",
+      "target_weight": "127",
+      "test_date": "03/31/2022",
+      "next_test_date": "08/01/2022"
+    }');
+INSERT INTO `users` VALUES (1,'Jane','Smith','Teresa','rudi.shafakian@lmi.org','Soldier','Specialist Smith','60','117','20', '127','2022-03-31','2022-08-01');
+INSERT INTO `users` VALUES (1,'John','Williams','Thomas','rudi.shafakian@lmi.org','Soldier','Specialist Williams','75','223','14', '196','2022-03-31','2022-08-01');
+    
+    SELECT * FROM users;
