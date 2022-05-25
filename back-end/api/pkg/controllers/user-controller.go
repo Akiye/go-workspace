@@ -1,32 +1,43 @@
 package controllers
 
 import (
-	"encoding/json"
-	"fmt"
-	"lmi.org/djb/pkg/models"
-	"lmi.org/djb/pkg/utils"
+    "encoding/json"
+    "fmt"
+    "lmi.org/djb/pkg/models"
+    "lmi.org/djb/pkg/utils"
 	"io/ioutil"
 	"log"
-	"net/http"
-	"strconv"
+    "net/http"
+    "strconv"
 
-	"github.com/gorilla/mux"
+    "github.com/gorilla/mux"
 )
 
 var NewUser models.User
+
+func PingPong(w http.ResponseWriter, r *http.Request) {
+    food := map[string]string{ "message": "ping?", "data": "pong!"}
+    res, _ := json.Marshal(food)
+    fmt.Println(string(res))
+
+
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write(res)
+}
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	Id := vars["Id"]
 	ID, err := strconv.ParseInt(Id, 0, 0)
-	CreateUser := &models.User{}
-	utils.ParseBody(r, CreateUser)
-	b := CreateUser.CreateUser()
-	res, _ := json.Marshal(b)
+    CreateUser := &models.User{}
+    utils.ParseBody(r, CreateUser)
+    b := CreateUser.CreateUser()
+    res, _ := json.Marshal(b)
 	userDetails, _ := models.GetUserById(ID)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
-	w.Write(res)
+    w.Write(res)
 
 	if err != nil {
 		log.Fatal(err)
@@ -38,26 +49,26 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
-	newUsers := models.GetAllUsers()
-	res, _ := json.Marshal(newUsers)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+    newUsers := models.GetAllUsers()
+    res, _ := json.Marshal(newUsers)
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write(res)
 }
 
 func GetUserById(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	Id := vars["Id"]
-	ID, err := strconv.ParseInt(Id, 0, 0)
-	if err != nil {
-		fmt.Println("Error while parsing")
-	}
-	userDetails, _ := models.GetUserById(ID)
-	res, _ := json.Marshal(userDetails)
-	w.Header().Set("Content-Type", "pkglication/json")
-	w.WriteHeader(http.StatusOK)
+    vars := mux.Vars(r)
+    Id := vars["Id"]
+    ID, err := strconv.ParseInt(Id, 0, 0)
+    if err != nil {
+        fmt.Println("Error while parsing")
+    }
+    userDetails, _ := models.GetUserById(ID)
+    res, _ := json.Marshal(userDetails)
+	w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
 
-	w.Write(res)
+    w.Write(res)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,29 +86,29 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
-	var updateUser = &models.User{}
-	utils.ParseBody(r, updateUser)
-	vars := mux.Vars(r)
-	Id := vars["Id"]
-	ID, err := strconv.ParseInt(Id, 0, 0)
-	if err != nil {
-		fmt.Println("Error while parsing")
-	}
-	userDetails, db := models.GetUserById(ID)
-	if updateUser.FirstName != "" {
-		userDetails.FirstName = updateUser.FirstName
-	}
-	if updateUser.LastName != "" {
-		userDetails.LastName = updateUser.LastName
-	}
-	if updateUser.TargetWeight != 0 {
-		userDetails.TargetWeight = updateUser.TargetWeight
-	}
-	db.Save(&userDetails)
-	res, _ := json.Marshal(userDetails)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+    var updateUser = &models.User{}
+    utils.ParseBody(r, updateUser)
+    vars := mux.Vars(r)
+    Id := vars["Id"]
+    ID, err := strconv.ParseInt(Id, 0, 0)
+    if err != nil {
+        fmt.Println("Error while parsing")
+    }
+    userDetails, db := models.GetUserById(ID)
+    if updateUser.FirstName != "" {
+        userDetails.FirstName = updateUser.FirstName
+    }
+    if updateUser.LastName != "" {
+        userDetails.LastName = updateUser.LastName
+    }
+    if updateUser.TargetWeight != 0 {
+        userDetails.TargetWeight = updateUser.TargetWeight
+    }
+    db.Save(&userDetails)
+    res, _ := json.Marshal(userDetails)
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write(res)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -108,17 +119,17 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	Id := vars["Id"]
-	ID, err := strconv.ParseInt(Id, 0, 0)
-	if err != nil {
-		fmt.Println("Error while parsing")
-	}
+    vars := mux.Vars(r)
+    Id := vars["Id"]
+    ID, err := strconv.ParseInt(Id, 0, 0)
+    if err != nil {
+        fmt.Println("Error while parsing")
+    }
 	user := models.DeleteUser(ID)
 	res, _ := json.Marshal(user)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write(res)
 	if err != nil {
 		log.Fatal(err)
 	}
